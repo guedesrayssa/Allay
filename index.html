@@ -25,6 +25,7 @@
         type: Phaser.AUTO,
         width: larguraJogo,
         height: alturaJogo,
+        
         // Ativando a física no jogo
         physics: {
           default: "arcade",
@@ -42,7 +43,7 @@
 
       const game = new Phaser.Game(config);
 
-      //Criação das váriaveis que guardam os elementos do jogo
+      // Criação das váriaveis que guardam os elementos do jogo
       var allay;
       var teclado;
       var turbo;
@@ -51,6 +52,7 @@
       var pontuação = 0;
       var placar;
 
+      // Carrega as imagens utilizadas no jogo
       function preload() {
         this.load.image("background", "assets/fundo.png");
         this.load.image("player", "assets/allay.png");
@@ -139,7 +141,7 @@
       }
 
       function semTurbo() {
-        turbo.setVisible(false);
+        turbo.setVisible(false); // Deixa o turbo invisível
       }
 
       function coletaMoeda() { //Reposiciona a moeda após ser coletada
