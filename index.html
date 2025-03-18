@@ -25,7 +25,11 @@
         type: Phaser.AUTO,
         width: larguraJogo,
         height: alturaJogo,
-        
+
+        scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH,
+        },
         // Ativando a física no jogo
         physics: {
           default: "arcade",
@@ -43,7 +47,7 @@
 
       const game = new Phaser.Game(config);
 
-      // Criação das váriaveis que guardam os elementos do jogo
+      //Criação das váriaveis que guardam os elementos do jogo
       var allay;
       var teclado;
       var turbo;
@@ -52,7 +56,6 @@
       var pontuação = 0;
       var placar;
 
-      // Carrega as imagens utilizadas no jogo
       function preload() {
         this.load.image("background", "assets/fundo.png");
         this.load.image("player", "assets/allay.png");
@@ -63,7 +66,23 @@
 
       function create() {
         // Diminui a escala da imagem do jogo pela metade
-        this.add.image(larguraJogo / 2, alturaJogo / 2, "background");
+        //this.add.image(larguraJogo / 2, alturaJogo / 2, "background");
+
+        if (game.scale.orientation === Phaser.Scale.LANDSCAPE) {
+          this.add.image(larguraJogo / 2, alturaJogo / 2, "background");
+        } else if (game.scale.orientation === Phaser.Scale.PORTRAIT) {
+          this.add.image(larguraJogo / 2, alturaJogo / 2, "background");
+        }
+
+        //evento de mudança de orientação
+        game.scale.on("orientationchange", function (orientation) {
+          if (orientation === Phaser.Scale.PORTRAIT) {
+            console.log("PORTRAIT");
+          }
+          if (orientation === Phaser.Scale.LANDSCAPE) {
+            console.log("LANDSCAPE");
+          }
+        });
 
         // Adiciona a imagem do modo turbo
         turbo = this.add.sprite(0, 0, "turbo").setScale(0.8);
@@ -141,10 +160,11 @@
       }
 
       function semTurbo() {
-        turbo.setVisible(false); // Deixa o turbo invisível
+        turbo.setVisible(false);
       }
 
-      function coletaMoeda() { //Reposiciona a moeda após ser coletada
+      function coletaMoeda() {
+        //Reposiciona a moeda após ser coletada
         moeda.disableBody(true, true);
         var posicaoMoeda_Y = Phaser.Math.RND.between(0, 1024);
         moeda.setPosition(posicaoMoeda_Y, 100);
@@ -157,7 +177,6 @@
         placar.setText("Moedas: " + pontuação); // Atualizar o placar
 
         moeda.setVisible(true); // Ativa a visão da próxima moeda
-        
       }
     </script>
   </body>
